@@ -5,9 +5,7 @@ import M from "materialize-css";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
+import { API } from "../services/api";
 
 // prepravi funkciju u arrow
 // postman - aplikacija

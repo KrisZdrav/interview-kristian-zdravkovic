@@ -7,7 +7,6 @@ import Todo from "./Todo";
 function TodoList({ todos, setTodos, getTodos }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const firstLoad = true;
   // console.log(location.pathname);
   // Add on spacebar
   // useEffect(() => {

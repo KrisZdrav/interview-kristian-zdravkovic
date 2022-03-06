@@ -7,8 +7,6 @@ import { fileURLToPath } from "url";
 import { join, dirname } from "path";
 import pkg from "lodash";
 const { isEmpty } = pkg;
-// const bodyParser = require("body-parser");
-// const cors = require("cors");
 const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

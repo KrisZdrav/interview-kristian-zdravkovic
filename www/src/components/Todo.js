@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Moment from "react-moment";
 import M from "materialize-css";
 import moment from "moment";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
+import { API } from "../services/api";
 
 function Todo({ text, todos, setTodos, getTodos, todo, completed }) {
   const navigate = useNavigate();
@@ -122,7 +119,7 @@ function Todo({ text, todos, setTodos, getTodos, todo, completed }) {
           edit
         </i>
         <i
-          onClick={completedHandle}
+          onClick={() => completedHandle()}
           className="hover small-size material-icons blue-text"
         >
           {todo.completed ? "check_circle" : "check"}

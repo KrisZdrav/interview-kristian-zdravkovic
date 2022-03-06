@@ -1,15 +1,10 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import M from "materialize-css";
-// import { Api } from "../src/service/api";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 
-const API = axios.create({
-  baseURL: "http://localhost:5000/api",
-});
+import { API } from "./services/api";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -29,8 +24,6 @@ function App() {
   //   });
   //   console.log("ovo ti je to brate moj", result);
   // };
-
-  // AXIOS
 
   const getTodos = () => {
     API.get("/todos").then(({ data }) => {
