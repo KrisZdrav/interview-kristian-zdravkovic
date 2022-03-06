@@ -1,0 +1,9 @@
+FROM node:lts-slim
+
+WORKDIR /app
+
+VOLUME /app
+
+EXPOSE 3000
+
+CMD npm ci; npm start

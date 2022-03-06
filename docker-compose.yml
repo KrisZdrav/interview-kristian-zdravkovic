@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  proxy:
+    image: caddy:2.4.5-alpine
+    ports:
+      - 8080:8080
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - todo-app
+  backend:
+    image: backend-api
+    build:
+      context: .
+      dockerfile: api/Dockerfile.backend
+    volumes:
+      - ./api:/app
+    networks:
+      - todo-app
+
+  frontend:
+    image: frontend-www
+    build:
+      context: .
+      dockerfile: www/Dockerfile.frontend
+    volumes:
+      - ./www:/app
+    networks:
+      - todo-app
+    
+networks:
+  todo-app:
+    external: true
