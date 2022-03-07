@@ -21,7 +21,7 @@ After creating the network we need to build our containers with command:
 
     docker-compose up --build
 
-To use the app open in browser [127.0.0.1:8080]()
+To use the app open in browser [http://127.0.0.1:8080]()
 
 # Special features
 
