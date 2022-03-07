@@ -51,7 +51,8 @@ const TodoForm = ({ getTodos, todos }) => {
   // Submits a new todo or if there is an id edits that one
   const submitHandle = (e) => {
     // Disable sending empty todo
-    if (todo.length === 0) {
+    if (todo.trim().length === 0) {
+      showSnackbar("Please enter a value", "error");
       return;
     }
     // EDIT
