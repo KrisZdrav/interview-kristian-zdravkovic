@@ -1,41 +1,3 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 * {
   box-sizing: border-box;
 }
@@ -90,9 +52,7 @@ h6 {
 .hover:hover {
   cursor: pointer;
 }
-/* .small {
-  text-align: center;
-} */
+
 .form {
   position: absolute;
   left: 50%;
@@ -111,37 +71,3 @@ h6 {
   bottom: 5%;
   left: 2%;
 }
-
-/* 
-AXIOS - DELETE i PATCH (DONE) -
-Time stamp u okviru Tododa {DONE} - 
-empty list ako je prazan array {DONE} - Conditional rendering u TodoList {todos.length === 0 ?}
-Empty todo can not be sent {DONE} - return if todo.length === 0 u TodoForm submit handle
-cursor pointer na ikonice {DONE} - Hover clasa
-send on enter {DONE} - Handle key in TodoForm
-Icon colors {DONE} - blue theme
-Texarea = to input {DONE} - BORDER COLOR OF INPUT?
-Reorder array on complete {DONE} - Sort array in handleComplete in Todo
-Icon size {DONE}
-Capitalize first letter {DONE} - function in TodoForm
-Icon padding {DONE} 
-Focus on new todo {DONE} - use inputRef in TodoForm (with and without id on useEffect)
-Add new todo on space key press {DONE}
-One step back on esc key {DONE}
-snackbar for notification materialize css {DONE}
-strelica na save dugme {DONE}
-{New todo add, todo delete, empty input, commands} {DONE}
-responsive {DONE}
-Rearange completed todos on add or edit {ON EDIT DONE} {REARANGE ON ADD}
-Undo delete 
-Center the submit button
-Smooth transition for complete animations
-ONEMOGUCI PRAZAN INPUT
-
-
-biblioteke:
-
-moment js - Todo = { created: moment().format("lll") }
-lodash    - instaliraj ga i ubaciti isEmpty(todos) iskoristii u funcionalnosti za prikazivanje prazne liste
-
-*/

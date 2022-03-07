@@ -1,28 +1,16 @@
+// IMPORTS //
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import M from "materialize-css";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-
 import { API } from "../services/api";
+import { showSnackbar } from "../common/functions";
 
-// prepravi funkciju u arrow
-// postman - aplikacija
-function TodoForm({ getTodos, todos }) {
+const TodoForm = ({ getTodos, todos }) => {
   const [todo, setTodo] = useState("");
-  // Preuzimamo ga iz URL i koristimo
   const { id } = useParams();
   const navigate = useNavigate();
   const inputRef = useRef();
-  // Back on backspace
-  useEffect(() => {
-    window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        navigate("/");
-      }
-    });
-  }, []);
 
   // Capital letter
   function capitalizeFirstLetter(string) {
@@ -36,48 +24,51 @@ function TodoForm({ getTodos, todos }) {
       submitHandle();
     }
   };
+  // Back on backspace
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        navigate("/");
+      }
+    });
+  }, [navigate]);
 
-  // If id, izvlaci text iz objekta i stavlja ga u input value
+  // If there is an id on component mount, sets input value to todo text
   useEffect(() => {
     if (id) {
       const editItem = todos.find((item) => item.id === id);
-      console.log(editItem);
       setTodo(editItem.text);
       inputRef.current.focus();
     }
     inputRef.current.focus();
-  }, [id]);
+  }, [todos, id]);
 
+  // Sets todo on input change
   const inputHandle = (e) => {
-    console.log(e);
     setTodo(e.target.value);
   };
 
+  // Submits a new todo or if there is an id edits that one
   const submitHandle = (e) => {
-    // Edit if id
-    // e.preventDefault();
+    // Disable sending empty todo
+    if (todo.length === 0) {
+      return;
+    }
+    // EDIT
     if (id) {
       API.put(`/todo/${id}`, { text: todo })
         .then(() => {
-          M.toast({
-            html: "Changes saved!",
-            displayLength: 1300,
-            classes: "green white-text",
-            outDuration: 0.5,
-          });
+          showSnackbar("Successfully updated");
           getTodos();
         })
         .catch((e) => {
-          M.toast({
-            html: "CSomething went wrong!",
-            displayLength: 1300,
-            classes: "red white-text",
-            outDuration: 0.5,
-          });
+          showSnackbar("Something went wrong", "error");
           console.log(e);
         });
-      // setTodos(copyTodos);
-    } else {
+    }
+
+    // SUBMIT
+    else {
       API.post("/new-todo", {
         text: capitalizeFirstLetter(todo),
         id: uuidv4(),
@@ -85,30 +76,18 @@ function TodoForm({ getTodos, todos }) {
         timestamp: moment(),
       })
         .then((r) => {
-          M.toast({
-            html: "Todo added!",
-            displayLength: 1300,
-            classes: "green white-text",
-            outDuration: 0.5,
-          });
+          showSnackbar("Todo added");
           getTodos();
         })
         .catch((e) => {
           console.log(e);
-          M.toast({
-            html: "Something went wrong",
-            displayLength: 1300,
-            classes: "red white-text",
-            outDuration: 0.5,
-          });
+          showSnackbar("Something went wrong", "error");
         });
     }
 
     setTodo("");
     navigate("/");
   };
-  // Logika za complete task na dugme
-
   return (
     <div className="container row form  ">
       <div className="input-field col s10 m10 l10">
@@ -132,6 +111,6 @@ function TodoForm({ getTodos, todos }) {
       </div>
     </div>
   );
-}
+};
 
 export default TodoForm;

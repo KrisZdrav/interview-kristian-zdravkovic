@@ -1,21 +1,30 @@
-import React, { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import M from "materialize-css";
+import React, { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import M from "materialize-css";
 
 import Todo from "./Todo";
 
-function TodoList({ todos, setTodos, getTodos }) {
+const TodoList = ({ todos, setTodos, getTodos }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  // console.log(location.pathname);
-  // Add on spacebar
-  // useEffect(() => {
-  //   window.addEventListener("keydown", (e) => {
-  //     if (e.key === " " && location.pathname === "/") {
-  //       navigate("/new-todo");
-  //     }
-  //   });
-  // }, []);
+
+  // Handle spacebar
+  const handleKey = useCallback(
+    (e) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        navigate("/new-todo");
+      }
+    },
+    [navigate]
+  );
+  // Add listener on use effect
+  useEffect(() => {
+    window.addEventListener("keydown", handleKey);
+
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [handleKey]);
 
   return todos.length === 0 ? (
     <div>
@@ -26,77 +35,48 @@ function TodoList({ todos, setTodos, getTodos }) {
 
       {/* Bottom right button */}
       <div className="fixed-action-btn ">
-        <a
+        <span
           onClick={() => {
             navigate("/new-todo");
           }}
           className="btn-floating btn-large blue pulse"
         >
           <i className="large material-icons">add</i>
-        </a>
+        </span>
       </div>
-      {/*  */}
     </div>
   ) : (
     <div className="todo-container">
       <header>To-Do list:</header>
       {/* Bottom right button */}
       <div className="fixed-action-btn  ">
-        <a
+        <span
           onClick={() => {
             navigate("/new-todo");
           }}
           className="btn-floating btn-large blue pulse"
         >
           <i className="large material-icons">add</i>
-        </a>
+        </span>
       </div>
-      {/*  */}
+
       <ul className="todo-list row container ">
-        {todos.map((todo) => (
-          <Todo
-            completed={todo.completed}
-            todo={todo}
-            todos={todos}
-            setTodos={setTodos}
-            getTodos={getTodos}
-            text={todo.text}
-            key={todo.id}
-          />
+        {todos.map((todo, index) => (
+          <div key={index}>
+            <Todo
+              completed={todo.completed}
+              todo={todo}
+              todos={todos}
+              setTodos={setTodos}
+              getTodos={getTodos}
+              text={todo.text}
+              indexKey={index}
+            />
+          </div>
         ))}
       </ul>
     </div>
   );
-  // return (
-  //   <div className="todo-container">
-  //     <header>Simple todos</header>
-  //     {/* Bottom right button */}
-  //     <div className="fixed-action-btn ">
-  //       <a
-  //         onClick={() => {
-  //           navigate("/new-todo");
-  //         }}
-  //         className="btn-floating btn-large blue pulse"
-  //       >
-  //         <i className="large material-icons">add</i>
-  //       </a>
-  //     </div>
-  //     {/*  */}
-  //     <ul className="todo-list">
-  //       {todos.map((todo) => (
-  //         <Todo
-  //           completed={todo.completed}
-  //           todo={todo}
-  //           todos={todos}
-  //           setTodos={setTodos}
-  //           getTodos={getTodos}
-  //           text={todo.text}
-  //           key={todo.id}
-  //         />
-  //       ))}
-  //     </ul>
-  //   </div>
-  // );
-}
+};
 
 export default TodoList;

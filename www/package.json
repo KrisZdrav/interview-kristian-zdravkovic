@@ -14,7 +14,7 @@
     "react-edit-text": "^4.2.0",
     "react-moment": "^1.1.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
+    "react-scripts": "3.2.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },

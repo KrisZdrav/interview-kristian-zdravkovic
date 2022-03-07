@@ -7,10 +7,10 @@ import { fileURLToPath } from "url";
 import { join, dirname } from "path";
 import pkg from "lodash";
 const { isEmpty } = pkg;
+
 const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
 const file = join(__dirname, "db.json");
 const adapter = new JSONFile(file);
 const db = new Low(adapter);
@@ -28,7 +28,6 @@ await db.read();
 // If dbjson.json doesn't exist, db.data will be null
 // Set default data
 db.data ||= defaultState;
-// ????????????????????//
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -44,25 +43,15 @@ app.post("/api/new-todo", (req, res) => {
   return res.json(db.data.todos);
 });
 
-// Updatuje listu
-// app.post("/api/todos", (req, res) => {
-//   todos = [...req.body];
-//   res.json(todos);
-// });
-
 //DELETE
 app.delete("/api/todo/:id", (req, res) => {
   const { id } = req.params;
 
   let copyTodos = [...db.data.todos];
-
   const newTodos = copyTodos.filter((element) => element.id !== id);
   db.data.todos = [...newTodos];
 
-  console.log(newTodos);
-
   db.write();
-  // console.log(id);
   return res.json(db.data.todos);
 });
 
@@ -74,18 +63,15 @@ app.put("/api/todo/:id", (req, res) => {
     const copyTodos = [...db.data.todos];
     const index = copyTodos.findIndex((item) => item.id === id);
     copyTodos[index].text = req.body.text;
-    console.log(`Body nije prazan`);
 
     db.write();
   }
   // If req body is empty update completed
   else {
     const copyTodos = [...db.data.todos];
-    // Iz kog nalazi index itema za uzet ID
     const index = copyTodos.findIndex((item) => item.id === id);
-    // Pristupa mu i menja complete status u suprotno
     copyTodos[index].completed = !copyTodos[index].completed;
-    console.log(`Body je prazan`);
+
     db.write();
   }
   res.json(db.data.todos);
@@ -94,4 +80,3 @@ app.put("/api/todo/:id", (req, res) => {
 // Listen to the port
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
-//
